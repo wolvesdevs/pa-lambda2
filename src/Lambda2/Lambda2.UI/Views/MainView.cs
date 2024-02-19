@@ -183,4 +183,54 @@ public partial class MainView : Form
             Debug.WriteLine($"<result12>{product}");
         }
     }
+
+    private void button4_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+        ];
+
+        var result2 = from product in products
+                      where product.Name.ToLower()[0] == 'p'
+                      select product;
+        foreach (var product in result2)
+        {
+            Debug.WriteLine($"<result2>Id: {product.Id}, Name: {product.Name}, Price: {product.Price}");
+        }
+
+        var result3 = from product in products
+                      let name = product.Name.ToLower()
+                      where name[0] == 'p'
+                      select product;
+        foreach (var product in result3)
+        {
+            Debug.WriteLine($"<result3>Id: {product.Id}, Name: {product.Name}, Price: {product.Price}");
+        }
+
+        var result4 =
+            from product in products
+            let name = product.Name.ToLower()
+            where name[0] == 'p'
+            let MyPrice = (product.Price / 2 * 1.08)
+            select new { product.Name, MyPrice };
+        foreach (var product in result4)
+        {
+            Debug.WriteLine($"<result4>Name: {product.Name}, Price: {product.MyPrice}");
+        }
+
+        List<string> csvs = ["1,2,3", "4,5,6,7", "8,9"];
+        var result5 =
+            from csv in csvs
+            let items = csv.Split(',')
+            from item in items
+            select item;
+        foreach (var item in result5)
+        {
+            Debug.WriteLine($"<result5>item: {item}");
+        }
+    }
 }
