@@ -233,4 +233,46 @@ public partial class MainView : Form
             Debug.WriteLine($"<result5>item: {item}");
         }
     }
+
+    private void button5_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 =
+            from product in products
+            group product by product.Price;
+        foreach(var group in result1)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach(var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: { row.Price}");
+            }
+        }
+
+        Debug.WriteLine("----------------------------------------");
+
+        var result2 =
+            from product in products
+            where product.Price > 250
+            orderby product.Price descending
+            group product by product.Price;
+        foreach(var group in result2)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach(var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: { row.Price}");
+            }
+        }
+    }
 }
