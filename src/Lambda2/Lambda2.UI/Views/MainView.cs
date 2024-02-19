@@ -18,6 +18,21 @@ namespace Lambda2.UI
                           where num >= 5
                           select num;
             Debug.WriteLine(string.Join(", ", result1));
+
+            var result2 = from num in nums
+                          where num >= 3
+                          && num <= 5
+                          || num == 7
+                          select num;
+            Debug.WriteLine(string.Join(", ", result2));
+
+            var result3 = from num in nums
+                          where num >= 3
+                          && num <= 5
+                          || num == 7
+                          orderby num descending
+                          select num;
+            Debug.WriteLine(string.Join(", ", result3));
         }
     }
 }
