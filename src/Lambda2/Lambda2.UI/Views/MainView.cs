@@ -135,7 +135,7 @@ public partial class MainView : Form
                       select new { product.Name, product.Price };
         foreach (var product in result7)
         {
-            Debug.WriteLine($"<result7>Id: Name: {product.Name} Price: {product.Price}"); 
+            Debug.WriteLine($"<result7>Id: Name: {product.Name} Price: {product.Price}");
         }
 
         var result8 = from product in products
@@ -144,7 +144,7 @@ public partial class MainView : Form
                       select new { product.Name, AAA = product.Price };
         foreach (var product in result8)
         {
-            Debug.WriteLine($"<result8>Id: Name: {product.Name} Price: {product.AAA}"); 
+            Debug.WriteLine($"<result8>Id: Name: {product.Name} Price: {product.AAA}");
         }
 
         var result9 = from product in products
@@ -153,7 +153,34 @@ public partial class MainView : Form
                       select new { product.Name, Price = $"{product.Price}‰~" };
         foreach (var product in result9)
         {
-            Debug.WriteLine($"<result9>Id: Name: {product.Name} Price: {product.Price}"); 
+            Debug.WriteLine($"<result9>Id: Name: {product.Name} Price: {product.Price}");
+        }
+
+        var result10 = from product in products
+                       where product.Name.ToLower()[0] == 'p'
+                       orderby product.Price descending, product.Id
+                       select new ProductDto(product.Id.ToString(), product.Name);
+        foreach (var product in result10)
+        {
+            Debug.WriteLine($"<result10>{product}");
+        }
+
+        var result11 = from product in products
+                       where product.Name.ToLower()[0] == 'p'
+                       orderby product.Price descending, product.Id
+                       select new ProductDto(product);
+        foreach (var product in result11)
+        {
+            Debug.WriteLine($"<result11>{product}");
+        }
+
+        var result12 = from product in products
+                       where product.Name.ToLower()[0] == 'p'
+                       orderby product.Price descending, product.Id
+                       select new ProductEntity { Id = product.Id.ToString(), Name = product.Name };
+        foreach (var product in result12)
+        {
+            Debug.WriteLine($"<result12>{product}");
         }
     }
 }
