@@ -119,5 +119,23 @@ public partial class MainView : Form
         {
             Debug.WriteLine($"<result5>Id: {product.Id}, Name: {product.Name}, Price: {product.Price}");
         }
+
+        var result6 = from product in products
+                      where product.Name.ToLower()[0] == 'p'
+                      orderby product.Price descending, product.Id
+                      select product.Name;
+        foreach (var name in result6)
+        {
+            Debug.WriteLine($"<result6>Id: Name: {name}");
+        }
+
+        var result7 = from product in products
+                      where product.Name.ToLower()[0] == 'p'
+                      orderby product.Price descending, product.Id
+                      select new { product.Name, product.Price };
+        foreach (var product in result7)
+        {
+            Debug.WriteLine($"<result7>Id: Name: {product.Name} Price: {product.Price}"); 
+        }
     }
 }
