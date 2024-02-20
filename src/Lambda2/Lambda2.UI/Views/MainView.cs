@@ -307,18 +307,18 @@ public partial class MainView : Form
     {
         List<Sale> sales =
             [
-                new Sale(10, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
-                new Sale(11, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
-                new Sale(12, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(10, 1, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 1, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 1, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
             ];
 
         List<SaleItem> saleItems =
             [
-                new SaleItem(10, 1, 2),
-                new SaleItem(10, 2, 3),
-                new SaleItem(11, 1, 5),
-                new SaleItem(12, 1, 4),
-                new SaleItem(12, 3, 1),
+                new SaleItem(10, 1, 1, 2),
+                new SaleItem(10, 1, 2, 3),
+                new SaleItem(11, 1, 1, 5),
+                new SaleItem(12, 1, 1, 4),
+                new SaleItem(12, 1, 3, 1),
             ];
 
         Debug.WriteLine("------------------- result1 ---------------------");
@@ -359,6 +359,46 @@ public partial class MainView : Form
             };
 
         foreach (var row in result2)
+        {
+            Debug.WriteLine(row);
+        }
+    }
+
+    private void button8_Click(object sender, EventArgs e)
+    {
+        List<Sale> sales =
+            [
+                new Sale(10, 1, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 1, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 1, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+            ];
+
+        List<SaleItem> saleItems =
+            [
+                new SaleItem(10, 1, 1, 2),
+                new SaleItem(10, 99, 2, 3),
+                new SaleItem(11, 1, 1, 5),
+                new SaleItem(12, 1, 1, 4),
+                new SaleItem(12, 1, 3, 1),
+            ];
+
+        Debug.WriteLine("------------------- result1 ---------------------");
+
+        var result1 =
+            from s in sales
+            join si in saleItems
+            on new { s.SaleId, s.No }
+            equals new { si.SaleId, si.No }
+            select new
+            {
+                s.SaleId,
+                s.CustomerId,
+                s.SaleDateTime,
+                si.ProductId,
+                si.SaleCount,
+            };
+
+        foreach (var row in result1)
         {
             Debug.WriteLine(row);
         }

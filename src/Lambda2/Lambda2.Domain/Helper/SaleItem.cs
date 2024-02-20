@@ -1,8 +1,9 @@
 ﻿namespace Lambda2.Domain.Helper;
 
-public class SaleItem(int saleId, int productId, int saleCount)
+public class SaleItem(int saleId, int no, int productId, int saleCount)
 {
-    public int SaleId { get; set; } = saleId;
-    public int ProductId { get; set; } = productId;
-    public int SaleCount { get; set; } = saleCount;
+    public int SaleId { get; } = saleId;
+    public int No { get; } = no;
+    public int ProductId { get; } = productId;
+    public int SaleCount { get; } = saleCount;
 }
