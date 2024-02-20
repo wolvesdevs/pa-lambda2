@@ -443,4 +443,12 @@ public partial class MainView : Form
             Debug.WriteLine(row);
         }
     }
+
+    private void button10_Click(object sender, EventArgs e)
+    {
+        List<int> nums = [1, 4, 8, 5, 10, 3, 2];
+        var result1 = nums.Where(x => x >= 5);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+    }
 }
