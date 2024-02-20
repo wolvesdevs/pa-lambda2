@@ -447,8 +447,24 @@ public partial class MainView : Form
     private void button10_Click(object sender, EventArgs e)
     {
         List<int> nums = [1, 4, 8, 5, 10, 3, 2];
+
         var result1 = nums.Where(x => x >= 5);
         Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = nums.Where(x => x >= 5);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        // ïΩãœ
+        var result3 = nums.Average();
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+        
+        // ç≈ëÂ, ç≈è¨, çáåv
+        var result4 = nums.Max();
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+        var result5 = nums.Min();
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+        var result6 = nums.Sum();
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
 
     }
 }
