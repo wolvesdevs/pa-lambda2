@@ -581,4 +581,25 @@ public partial class MainView : Form
             (from num in nums
              select num.ToString()).ToList();
     }
+
+    private void button16_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 = products.OrderBy(x => x.Price).ToList();
+        result1.ForEach(x => Debug.WriteLine($"<result1> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+
+        var result2 = products.OrderByDescending(x => x.Price).ToList();
+        result2.ForEach(x => Debug.WriteLine($"<result2> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+
+        var result3 = products.OrderBy(x => x.Price).ThenByDescending(x => x.Id).ToList();
+        result3.ForEach(x => Debug.WriteLine($"<result3> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+    }
 }
