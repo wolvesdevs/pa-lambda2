@@ -602,4 +602,44 @@ public partial class MainView : Form
         var result3 = products.OrderBy(x => x.Price).ThenByDescending(x => x.Id).ToList();
         result3.ForEach(x => Debug.WriteLine($"<result3> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
     }
+
+    private void button17_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p200", 200),
+            new Product(20, "p200", 200),
+            new Product(30, "p200", 220),
+            new Product(40, "p200", 220),
+            new Product(50, "p200", 300),
+            new Product(60, "p300", 320),
+            new Product(70, "p400", 320),
+        ];
+
+        var result1 =
+            from product in products
+            group product by new { product.Name, product.Price };
+        foreach (var group in result1)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach (var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
+            }
+        }
+
+        Debug.WriteLine("-------------------- result2 --------------------");
+
+        var result2 = products.GroupBy(x => new { x.Name, x.Price }).ToList();
+        foreach (var group in result2)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach (var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
+            }
+        }
+    }
 }
