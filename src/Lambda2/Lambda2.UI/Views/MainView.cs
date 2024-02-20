@@ -279,15 +279,15 @@ public partial class MainView : Form
     private void button6_Click(object sender, EventArgs e)
     {
         List<Product> products =
-        [
-            new Product(10, "p200", 200),
-            new Product(20, "p200", 200),
-            new Product(30, "p200", 220),
-            new Product(40, "p200", 220),
-            new Product(50, "p200", 300),
-            new Product(60, "p300", 320),
-            new Product(70, "p400", 320),
-        ];
+            [
+                new Product(10, "p200", 200),
+                new Product(20, "p200", 200),
+                new Product(30, "p200", 220),
+                new Product(40, "p200", 220),
+                new Product(50, "p200", 300),
+                new Product(60, "p300", 320),
+                new Product(70, "p400", 320),
+            ];
 
         var result1 =
             from product in products
@@ -300,6 +300,67 @@ public partial class MainView : Form
             {
                 Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
             }
+        }
+    }
+
+    private void button7_Click(object sender, EventArgs e)
+    {
+        List<Sale> sales =
+            [
+                new Sale(10, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+            ];
+
+        List<SaleItem> saleItems =
+            [
+                new SaleItem(10, 1, 2),
+                new SaleItem(10, 2, 3),
+                new SaleItem(11, 1, 5),
+                new SaleItem(12, 1, 4),
+                new SaleItem(12, 3, 1),
+            ];
+
+        Debug.WriteLine("------------------- result1 ---------------------");
+
+        var result1 =
+            from sale in sales
+            join saleItem in saleItems
+            on sale.SaleId equals saleItem.SaleId
+            select new
+            {
+                sale.SaleId,
+                sale.CustomerId,
+                sale.SaleDateTime,
+                saleItem.ProductId,
+                saleItem.SaleCount,
+            };
+
+        foreach (var row in result1)
+        {
+            Debug.WriteLine(row);
+        }
+
+        Debug.WriteLine("------------------- result2 ---------------------");
+
+        var result2 =
+            from s in sales
+            join si in saleItems
+            on s.SaleId equals si.SaleId
+            where s.SaleId >= 11
+            orderby si.SaleCount
+            select new
+            {
+                s.SaleId,
+                s.CustomerId,
+                s.SaleDateTime,
+                si.ProductId,
+                si.SaleCount,
+            };
+
+        foreach (var row in result2)
+        {
+            Debug.WriteLine(row);
         }
     }
 }
