@@ -403,4 +403,44 @@ public partial class MainView : Form
             Debug.WriteLine(row);
         }
     }
+
+    private void button9_Click(object sender, EventArgs e)
+    {
+        List<Sale> sales =
+            [
+                new Sale(10, 1, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 1, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 1, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+            ];
+
+        List<SaleItem> saleItems =
+            [
+                new SaleItem(10, 1, 1, 2),
+                new SaleItem(10, 1, 2, 3),
+                //new SaleItem(11, 1, 1, 5),
+                new SaleItem(12, 1, 1, 4),
+                new SaleItem(12, 1, 3, 1),
+            ];
+
+        Debug.WriteLine("------------------- result1 ---------------------");
+
+        var result1 =
+            from s in sales
+            join si in saleItems
+            on s.SaleId equals si.SaleId into sis
+            from si in sis.DefaultIfEmpty()
+            select new
+            {
+                s.SaleId,
+                s.CustomerId,
+                s.SaleDateTime,
+                ProductId = si?.ProductId ?? -1,
+                SaleCount = si?.SaleCount ?? -1,
+            };
+
+        foreach (var row in result1)
+        {
+            Debug.WriteLine(row);
+        }
+    }
 }
