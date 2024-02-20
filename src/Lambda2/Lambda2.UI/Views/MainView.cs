@@ -248,13 +248,13 @@ public partial class MainView : Form
         var result1 =
             from product in products
             group product by product.Price;
-        foreach(var group in result1)
+        foreach (var group in result1)
         {
             Debug.WriteLine($"Key: {group.Key}");
 
-            foreach(var row in group)
+            foreach (var row in group)
             {
-                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: { row.Price}");
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
             }
         }
 
@@ -265,14 +265,404 @@ public partial class MainView : Form
             where product.Price > 250
             orderby product.Price descending
             group product by product.Price;
-        foreach(var group in result2)
+        foreach (var group in result2)
         {
             Debug.WriteLine($"Key: {group.Key}");
 
-            foreach(var row in group)
+            foreach (var row in group)
             {
-                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: { row.Price}");
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
             }
         }
+    }
+
+    private void button6_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+            [
+                new Product(10, "p200", 200),
+                new Product(20, "p200", 200),
+                new Product(30, "p200", 220),
+                new Product(40, "p200", 220),
+                new Product(50, "p200", 300),
+                new Product(60, "p300", 320),
+                new Product(70, "p400", 320),
+            ];
+
+        var result1 =
+            from product in products
+            group product by new { product.Name, product.Price };
+        foreach (var group in result1)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach (var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
+            }
+        }
+    }
+
+    private void button7_Click(object sender, EventArgs e)
+    {
+        List<Sale> sales =
+            [
+                new Sale(10, 1, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 1, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 1, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+            ];
+
+        List<SaleItem> saleItems =
+            [
+                new SaleItem(10, 1, 1, 2),
+                new SaleItem(10, 1, 2, 3),
+                new SaleItem(11, 1, 1, 5),
+                new SaleItem(12, 1, 1, 4),
+                new SaleItem(12, 1, 3, 1),
+            ];
+
+        Debug.WriteLine("------------------- result1 ---------------------");
+
+        var result1 =
+            from sale in sales
+            join saleItem in saleItems
+            on sale.SaleId equals saleItem.SaleId
+            select new
+            {
+                sale.SaleId,
+                sale.CustomerId,
+                sale.SaleDateTime,
+                saleItem.ProductId,
+                saleItem.SaleCount,
+            };
+
+        foreach (var row in result1)
+        {
+            Debug.WriteLine(row);
+        }
+
+        Debug.WriteLine("------------------- result2 ---------------------");
+
+        var result2 =
+            from s in sales
+            join si in saleItems
+            on s.SaleId equals si.SaleId
+            where s.SaleId >= 11
+            orderby si.SaleCount
+            select new
+            {
+                s.SaleId,
+                s.CustomerId,
+                s.SaleDateTime,
+                si.ProductId,
+                si.SaleCount,
+            };
+
+        foreach (var row in result2)
+        {
+            Debug.WriteLine(row);
+        }
+    }
+
+    private void button8_Click(object sender, EventArgs e)
+    {
+        List<Sale> sales =
+            [
+                new Sale(10, 1, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 1, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 1, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+            ];
+
+        List<SaleItem> saleItems =
+            [
+                new SaleItem(10, 1, 1, 2),
+                new SaleItem(10, 99, 2, 3),
+                new SaleItem(11, 1, 1, 5),
+                new SaleItem(12, 1, 1, 4),
+                new SaleItem(12, 1, 3, 1),
+            ];
+
+        Debug.WriteLine("------------------- result1 ---------------------");
+
+        var result1 =
+            from s in sales
+            join si in saleItems
+            on new { s.SaleId, s.No }
+            equals new { si.SaleId, si.No }
+            select new
+            {
+                s.SaleId,
+                s.CustomerId,
+                s.SaleDateTime,
+                si.ProductId,
+                si.SaleCount,
+            };
+
+        foreach (var row in result1)
+        {
+            Debug.WriteLine(row);
+        }
+    }
+
+    private void button9_Click(object sender, EventArgs e)
+    {
+        List<Sale> sales =
+            [
+                new Sale(10, 1, 100, Convert.ToDateTime("2020/12/12 12:12:12")),
+                new Sale(11, 1, 100, Convert.ToDateTime("2020/12/13 12:12:12")),
+                new Sale(12, 1, 101, Convert.ToDateTime("2020/12/12 12:12:12")),
+            ];
+
+        List<SaleItem> saleItems =
+            [
+                new SaleItem(10, 1, 1, 2),
+                new SaleItem(10, 1, 2, 3),
+                //new SaleItem(11, 1, 1, 5),
+                new SaleItem(12, 1, 1, 4),
+                new SaleItem(12, 1, 3, 1),
+            ];
+
+        Debug.WriteLine("------------------- result1 ---------------------");
+
+        var result1 =
+            from s in sales
+            join si in saleItems
+            on s.SaleId equals si.SaleId into sis
+            from si in sis.DefaultIfEmpty()
+            select new
+            {
+                s.SaleId,
+                s.CustomerId,
+                s.SaleDateTime,
+                ProductId = si?.ProductId ?? -1,
+                SaleCount = si?.SaleCount ?? -1,
+            };
+
+        foreach (var row in result1)
+        {
+            Debug.WriteLine(row);
+        }
+    }
+
+    private void button10_Click(object sender, EventArgs e)
+    {
+        List<int> nums = [1, 4, 8, 5, 10, 3, 2];
+
+        var result1 = nums.Where(x => x >= 5);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = nums.Where(x => x >= 5);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        // ïΩãœ
+        var result3 = nums.Average();
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        // ç≈ëÂ, ç≈è¨, çáåv
+        var result4 = nums.Max();
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+        var result5 = nums.Min();
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+        var result6 = nums.Sum();
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
+    }
+
+    private void button11_Click(object sender, EventArgs e)
+    {
+        string[] values = ["A", "BB", "CCC", "DDDD", "EEEEE", "ABC"];
+
+        var result1 = values.Average(x => x.Length);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = values.Max(x => x.Length);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = values.Min(x => x.Length);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = values.Sum(x => x.Length);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+    }
+
+    private void button12_Click(object sender, EventArgs e)
+    {
+        List<int> ints = [10, 20];
+        List<object> objects = [1, 2, 3, "AAA", "BB", ints];
+
+        var result1 = objects.OfType<int>();
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = objects.OfType<string>();
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = objects.OfType<List<int>>();
+        foreach (var val in result3)
+        {
+            Debug.WriteLine($"<result3> {string.Join(", ", val)}");
+        }
+
+        var result4 = objects.OfType<int>().Where(x => x >= 2);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+    }
+
+    private void button13_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 = products.Where(x => x.Price == 200);
+        foreach (var product in result1)
+        {
+            Debug.WriteLine($"<result1> Id: {product.Id} Name: {product.Name} Price: {product.Price}");
+        }
+
+        var result2 = products.Where(x => x.Price == 200)
+                              .Select(x => x.Id);
+        foreach (var product in result2)
+        {
+            Debug.WriteLine($"<result2> Id: {product}");
+        }
+
+        var result3 = products.Where(x => x.Price == 200)
+                              .Select(x => new { x.Id, x.Name });
+        foreach (var product in result3)
+        {
+            Debug.WriteLine($"<result3> Id: {product.Id} Name: {product.Name}");
+        }
+    }
+
+    private void button14_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 = products.Where(x => x.Price == 200).ToList();
+        result1.ForEach(x => Debug.WriteLine($"<result1> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+    }
+
+    private void button15_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var array = products.Where(x => x.Price == 200).ToArray();
+        var list = products.Where(x => x.Price == 200).ToList();
+
+        var dtos = products.ConvertAll(x => new ProductDto(x));
+
+        var result1 =
+            (from product in products
+             where product.Price == 200
+             select product).ToList();
+
+        List<int> nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        List<string> strings = nums.ConvertAll(x => x.ToString());
+
+        var result2 =
+            (from num in nums
+             select num.ToString()).ToList();
+    }
+
+    private void button16_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 = products.OrderBy(x => x.Price).ToList();
+        result1.ForEach(x => Debug.WriteLine($"<result1> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+
+        var result2 = products.OrderByDescending(x => x.Price).ToList();
+        result2.ForEach(x => Debug.WriteLine($"<result2> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+
+        var result3 = products.OrderBy(x => x.Price).ThenByDescending(x => x.Id).ToList();
+        result3.ForEach(x => Debug.WriteLine($"<result3> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+    }
+
+    private void button17_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p200", 200),
+            new Product(20, "p200", 200),
+            new Product(30, "p200", 220),
+            new Product(40, "p200", 220),
+            new Product(50, "p200", 300),
+            new Product(60, "p300", 320),
+            new Product(70, "p400", 320),
+        ];
+
+        var result1 =
+            from product in products
+            group product by new { product.Name, product.Price };
+        foreach (var group in result1)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach (var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
+            }
+        }
+
+        Debug.WriteLine("-------------------- result2 --------------------");
+
+        var result2 = products.GroupBy(x => new { x.Name, x.Price }).ToList();
+
+        foreach (var group in result2)
+        {
+            Debug.WriteLine($"Key: {group.Key}");
+
+            foreach (var row in group)
+            {
+                Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
+            }
+        }
+    }
+
+    private void button18_Click(object sender, EventArgs e)
+    {
+        var result1 = Enumerable.Repeat(5, 10);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = Enumerable.Repeat("AAA", 10);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = Enumerable.Range(34, 7);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = Enumerable.Range(1, 10).Where(x => x % 2 == 0);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+
+        var result5 = Enumerable.Range(1, 10).Where(x => x % 2 == 1);
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+
+        var result6 = Enumerable.Range(1, 10).Select(x => x * 10);
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
     }
 }
