@@ -537,4 +537,19 @@ public partial class MainView : Form
             Debug.WriteLine($"<result3> Id: {product.Id} Name: {product.Name}");
         }
     }
+
+    private void button14_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 = products.Where(x => x.Price == 200).ToList();
+        result1.ForEach(x => Debug.WriteLine($"<result1> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
+    }
 }
