@@ -457,7 +457,7 @@ public partial class MainView : Form
         // ïΩãœ
         var result3 = nums.Average();
         Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
-        
+
         // ç≈ëÂ, ç≈è¨, çáåv
         var result4 = nums.Max();
         Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
@@ -466,5 +466,22 @@ public partial class MainView : Form
         var result6 = nums.Sum();
         Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
 
+    }
+
+    private void button11_Click(object sender, EventArgs e)
+    {
+        string[] values = ["A", "BB", "CCC", "DDDD", "EEEEE", "ABC"];
+
+        var result1 = values.Average(x => x.Length);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = values.Max(x => x.Length);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = values.Min(x => x.Length);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = values.Sum(x => x.Length);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
     }
 }
