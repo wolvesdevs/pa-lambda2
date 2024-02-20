@@ -518,9 +518,23 @@ public partial class MainView : Form
         ];
 
         var result1 = products.Where(x => x.Price == 200);
-        foreach(var product in result1)
+        foreach (var product in result1)
         {
             Debug.WriteLine($"<result1> Id: {product.Id} Name: {product.Name} Price: {product.Price}");
+        }
+
+        var result2 = products.Where(x => x.Price == 200)
+                              .Select(x => x.Id);
+        foreach (var product in result2)
+        {
+            Debug.WriteLine($"<result2> Id: {product}");
+        }
+
+        var result3 = products.Where(x => x.Price == 200)
+                              .Select(x => new { x.Id, x.Name });
+        foreach (var product in result3)
+        {
+            Debug.WriteLine($"<result3> Id: {product.Id} Name: {product.Name}");
         }
     }
 }
