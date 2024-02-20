@@ -505,4 +505,22 @@ public partial class MainView : Form
         var result4 = objects.OfType<int>().Where(x => x >= 2);
         Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
     }
+
+    private void button13_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var result1 = products.Where(x => x.Price == 200);
+        foreach(var product in result1)
+        {
+            Debug.WriteLine($"<result1> Id: {product.Id} Name: {product.Name} Price: {product.Price}");
+        }
+    }
 }
