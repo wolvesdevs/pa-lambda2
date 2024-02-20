@@ -632,6 +632,7 @@ public partial class MainView : Form
         Debug.WriteLine("-------------------- result2 --------------------");
 
         var result2 = products.GroupBy(x => new { x.Name, x.Price }).ToList();
+
         foreach (var group in result2)
         {
             Debug.WriteLine($"Key: {group.Key}");
@@ -641,5 +642,27 @@ public partial class MainView : Form
                 Debug.WriteLine($" id: {row.Id} name: {row.Name} price: {row.Price}");
             }
         }
+    }
+
+    private void button18_Click(object sender, EventArgs e)
+    {
+        var result1 = Enumerable.Repeat(5, 10);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = Enumerable.Repeat("AAA", 10);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = Enumerable.Range(34, 7);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = Enumerable.Range(1, 10).Where(x => x % 2 == 0);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+
+        var result5 = Enumerable.Range(1, 10).Where(x => x % 2 == 1);
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+
+        var result6 = Enumerable.Range(1, 10).Select(x => x * 10);
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
     }
 }
