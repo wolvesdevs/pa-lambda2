@@ -552,4 +552,33 @@ public partial class MainView : Form
         var result1 = products.Where(x => x.Price == 200).ToList();
         result1.ForEach(x => Debug.WriteLine($"<result1> Id: {x.Id} Name: {x.Name} Price: {x.Price}"));
     }
+
+    private void button15_Click(object sender, EventArgs e)
+    {
+        List<Product> products =
+        [
+            new Product(10, "p10A", 300),
+            new Product(20, "p20", 300),
+            new Product(30, "x301A", 200),
+            new Product(40, "P40", 500),
+            new Product(50, "P50", 200),
+        ];
+
+        var array = products.Where(x => x.Price == 200).ToArray();
+        var list = products.Where(x => x.Price == 200).ToList();
+
+        var dtos = products.ConvertAll(x => new ProductDto(x));
+
+        var result1 =
+            (from product in products
+             where product.Price == 200
+             select product).ToList();
+
+        List<int> nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        List<string> strings = nums.ConvertAll(x => x.ToString());
+
+        var result2 =
+            (from num in nums
+             select num.ToString()).ToList();
+    }
 }
