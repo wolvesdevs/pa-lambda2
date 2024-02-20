@@ -484,4 +484,25 @@ public partial class MainView : Form
         var result4 = values.Sum(x => x.Length);
         Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
     }
+
+    private void button12_Click(object sender, EventArgs e)
+    {
+        List<int> ints = [10, 20];
+        List<object> objects = [1, 2, 3, "AAA", "BB", ints];
+
+        var result1 = objects.OfType<int>();
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = objects.OfType<string>();
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = objects.OfType<List<int>>();
+        foreach (var val in result3)
+        {
+            Debug.WriteLine($"<result3> {string.Join(", ", val)}");
+        }
+
+        var result4 = objects.OfType<int>().Where(x => x >= 2);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+    }
 }
