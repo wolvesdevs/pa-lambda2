@@ -577,9 +577,11 @@ public partial class MainView : Form
         List<int> nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         List<string> strings = nums.ConvertAll(x => x.ToString());
 
-        var result2 =
-            (from num in nums
-             select num.ToString()).ToList();
+        var temp =
+            from num in nums
+            select num.ToString();
+
+        var result2 = temp.ToList();
     }
 
     private void button16_Click(object sender, EventArgs e)
@@ -712,18 +714,50 @@ public partial class MainView : Form
 
         var result2 = nums1.Intersect(nums2);
         Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
-        
+
         var result3 = nums1.Union(nums2);
         Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
-        
+
         var result4 = nums1.Concat(nums2);
         Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
-        
+
         var result5 = nums1.Except(nums2);
         Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
-        
+
         var result6 = nums2.Except(nums1);
         Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
-            
+
+    }
+
+    private void button21_Click(object sender, EventArgs e)
+    {
+        int[] nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 2];
+
+        var result1 = nums.Skip(5);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = nums.Take(4);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = nums.Skip(3).Take(4);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = nums.OrderByDescending(x => x).Take(5);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+
+        var result5 = nums.Distinct().OrderByDescending(x => x).Take(5);
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+
+        var result6 = nums.SkipWhile(x => x < 3);
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
+        var result7 = nums.TakeWhile(x => x < 5);
+        Debug.WriteLine($"<result7> {string.Join(", ", result7)}");
+
+    }
+
+    private void button22_Click(object sender, EventArgs e)
+    {
+
     }
 }

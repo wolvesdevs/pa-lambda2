@@ -8,13 +8,13 @@ public sealed class Product(int id, string name, int price)
 
     public override bool Equals(object? obj)
     {
-        if (obj == null)
+        if (obj is null)
         {
             return false;
         }
 
         var product = obj as Product;
-        if (product == null)
+        if (product is null)
         {
             return false;
         }
