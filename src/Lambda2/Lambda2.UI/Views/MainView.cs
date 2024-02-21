@@ -665,4 +665,45 @@ public partial class MainView : Form
         Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
 
     }
+
+    private void button19_Click(object sender, EventArgs e)
+    {
+        string[] h1 = ["A", "B", "C"];
+        string[] h2 = ["A", "B", "C"];
+
+        Debug.WriteLine(h1 == h2);
+        Debug.WriteLine(h1.Equals(h2));
+        Debug.WriteLine(h1.SequenceEqual(h2));
+
+        List<Product> product1 =
+            [
+                new Product(10, "p10A", 300),
+                new Product(20, "p20", 300),
+                new Product(30, "x301A", 200),
+                new Product(40, "P40", 500),
+                new Product(50, "P50", 200),
+            ];
+
+        List<Product> product2 =
+            [
+                new Product(10, "p10A", 300),
+                new Product(20, "p20", 300),
+                new Product(30, "x301A", 200),
+                new Product(40, "P40", 500),
+                new Product(50, "P50", 200),
+            ];
+
+        Product a = new(1, "", 1);
+        Product b = new(1, "", 1);
+
+        Debug.WriteLine($"a == b: {a == b}");
+        Debug.WriteLine($"a.Equals(b): {a.Equals(b)}");
+        Debug.WriteLine($"product1.SequenceEqual(product2): {product1.SequenceEqual(product2)}");
+
+    }
+
+    private void button20_Click(object sender, EventArgs e)
+    {
+
+    }
 }
