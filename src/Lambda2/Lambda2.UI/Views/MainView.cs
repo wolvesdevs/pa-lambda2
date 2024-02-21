@@ -758,6 +758,19 @@ public partial class MainView : Form
 
     private void button22_Click(object sender, EventArgs e)
     {
+        int[] nums = [1, 1, 2, 2, 3, 3, 4, 4, 4, 6, 2];
+
+        var result1 = nums.All(x => x >= 1);
+        Debug.WriteLine($"<result1> {result1}");
+
+        var result2 = nums.All(x => x >= 2);
+        Debug.WriteLine($"<result2> {result2}");
+
+        var result3 = nums.Any(x => x == 2);
+        Debug.WriteLine($"<result3> {result3}");
+
+        var result4 = nums.Any(x => x == 99);
+        Debug.WriteLine($"<result4> {result4}");
 
     }
 }
