@@ -577,9 +577,11 @@ public partial class MainView : Form
         List<int> nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         List<string> strings = nums.ConvertAll(x => x.ToString());
 
-        var result2 =
-            (from num in nums
-             select num.ToString()).ToList();
+        var temp =
+            from num in nums
+            select num.ToString();
+
+        var result2 = temp.ToList();
     }
 
     private void button16_Click(object sender, EventArgs e)
@@ -663,6 +665,112 @@ public partial class MainView : Form
 
         var result6 = Enumerable.Range(1, 10).Select(x => x * 10);
         Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
+    }
+
+    private void button19_Click(object sender, EventArgs e)
+    {
+        string[] h1 = ["A", "B", "C"];
+        string[] h2 = ["A", "B", "C"];
+
+        Debug.WriteLine(h1 == h2);
+        Debug.WriteLine(h1.Equals(h2));
+        Debug.WriteLine(h1.SequenceEqual(h2));
+
+        List<Product> product1 =
+            [
+                new Product(10, "p10A", 300),
+                new Product(20, "p20", 300),
+                new Product(30, "x301A", 200),
+                new Product(40, "P40", 500),
+                new Product(50, "P50", 200),
+            ];
+
+        List<Product> product2 =
+            [
+                new Product(10, "p10A", 300),
+                new Product(20, "p20", 300),
+                new Product(30, "x301A", 200),
+                new Product(40, "P40", 500),
+                new Product(50, "P50", 200),
+            ];
+
+        Product a = new(1, "", 1);
+        Product b = new(1, "", 1);
+
+        Debug.WriteLine($"a == b: {a == b}");
+        Debug.WriteLine($"a.Equals(b): {a.Equals(b)}");
+        Debug.WriteLine($"product1.SequenceEqual(product2): {product1.SequenceEqual(product2)}");
+
+    }
+
+    private void button20_Click(object sender, EventArgs e)
+    {
+        int[] nums1 = [1, 2, 3, 4, 9, 5, 2, 4, 6,];
+        int[] nums2 = [3, 4, 2, 99, 2];
+
+        var result1 = nums1.Distinct();
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = nums1.Intersect(nums2);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = nums1.Union(nums2);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = nums1.Concat(nums2);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+
+        var result5 = nums1.Except(nums2);
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+
+        var result6 = nums2.Except(nums1);
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
+    }
+
+    private void button21_Click(object sender, EventArgs e)
+    {
+        int[] nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 2];
+
+        var result1 = nums.Skip(5);
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = nums.Take(4);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+
+        var result3 = nums.Skip(3).Take(4);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+
+        var result4 = nums.OrderByDescending(x => x).Take(5);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+
+        var result5 = nums.Distinct().OrderByDescending(x => x).Take(5);
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+
+        var result6 = nums.SkipWhile(x => x < 3);
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+
+        var result7 = nums.TakeWhile(x => x < 5);
+        Debug.WriteLine($"<result7> {string.Join(", ", result7)}");
+
+    }
+
+    private void button22_Click(object sender, EventArgs e)
+    {
+        int[] nums = [1, 1, 2, 2, 3, 3, 4, 4, 4, 6, 2];
+
+        var result1 = nums.All(x => x >= 1);
+        Debug.WriteLine($"<result1> {result1}");
+
+        var result2 = nums.All(x => x >= 2);
+        Debug.WriteLine($"<result2> {result2}");
+
+        var result3 = nums.Any(x => x == 2);
+        Debug.WriteLine($"<result3> {result3}");
+
+        var result4 = nums.Any(x => x == 99);
+        Debug.WriteLine($"<result4> {result4}");
 
     }
 }
