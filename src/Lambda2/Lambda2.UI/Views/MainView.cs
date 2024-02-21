@@ -704,6 +704,26 @@ public partial class MainView : Form
 
     private void button20_Click(object sender, EventArgs e)
     {
+        int[] nums1 = [1, 2, 3, 4, 9, 5, 2, 4, 6,];
+        int[] nums2 = [3, 4, 2, 99, 2];
 
+        var result1 = nums1.Distinct();
+        Debug.WriteLine($"<result1> {string.Join(", ", result1)}");
+
+        var result2 = nums1.Intersect(nums2);
+        Debug.WriteLine($"<result2> {string.Join(", ", result2)}");
+        
+        var result3 = nums1.Union(nums2);
+        Debug.WriteLine($"<result3> {string.Join(", ", result3)}");
+        
+        var result4 = nums1.Concat(nums2);
+        Debug.WriteLine($"<result4> {string.Join(", ", result4)}");
+        
+        var result5 = nums1.Except(nums2);
+        Debug.WriteLine($"<result5> {string.Join(", ", result5)}");
+        
+        var result6 = nums2.Except(nums1);
+        Debug.WriteLine($"<result6> {string.Join(", ", result6)}");
+            
     }
 }
